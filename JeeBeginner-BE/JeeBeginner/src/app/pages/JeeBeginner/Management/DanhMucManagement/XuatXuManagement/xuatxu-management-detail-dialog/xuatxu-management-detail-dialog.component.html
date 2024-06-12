@@ -1,0 +1,59 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <div class="modal-title h4" id="example-modal-sizes-title-lg">
+      <span class="dialog-title">CHI TIẾT XUẤT XỨ </span>
+    </div>
+  </div>
+  <div
+    class="overlay overlay-block cursor-default modal-body overflow-auto"
+    style="min-height: 201px; max-height: 70vh"
+  >
+    <ng-container *ngIf="xuatxuManagementService.isLoading$ | async">
+      <div class="overlay-layer bg-transparent">
+        <div class="spinner spinner-lg spinner-success"></div>
+      </div>
+    </ng-container>
+    <ng-container>
+      <form action="#" class="form form-label-right" [formGroup]="formGroup">
+        <div class="form-group row">
+          <div class="col-lg-12">
+            <mat-form-field class="example-full-width">
+              <input
+                type="text"
+                matInput
+                formControlName="idxuatxu"
+                placeholder="Id xuất xứ"
+                readonly
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-12">
+            <mat-form-field class="example-full-width">
+              <input
+                type="text"
+                matInput
+                formControlName="tenxuatxu"
+                placeholder="Tên xuất xứ"
+                readonly
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+    <div class="modal-body">
+      <div class="modal-title" style="display: inline; flex: 2">
+        <button
+          mat-raised-button
+          style="float: right; margin-right: 12px"
+          class="ja_btn-goback"
+          (click)="goBack()"
+        >
+          {{ "COMMOM.TROLAI" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

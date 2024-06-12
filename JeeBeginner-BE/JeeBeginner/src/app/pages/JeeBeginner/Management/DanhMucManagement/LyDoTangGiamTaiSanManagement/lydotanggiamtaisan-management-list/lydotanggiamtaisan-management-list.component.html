@@ -1,0 +1,169 @@
+<div class="card card-custom gutter-b">
+  <div class="card-header">
+    <div class="card-title">
+      <span class="card-label">LÝ DO TĂNG GIẢM TÀI SẢN</span>
+    </div>
+    <div class="card-toolbar">
+      <button
+        mat-raised-button
+        class="ja_btn-addnew"
+        style="margin-right: 10px"
+        (click)="import()"
+        *ngIf="Visible"
+      >
+        <mat-icon style="color: #ffffff; font-size: 16px" aria-hidden="false">
+          import_contacts</mat-icon
+        >Import dữ liệu
+      </button>
+      <button
+        mat-raised-button
+        class="ja_btn-addnew"
+        style="margin-right: 10px"
+        (click)="create()"
+        *ngIf="Visible"
+      >
+        <mat-icon style="color: #ffffff; font-size: 16px" aria-hidden="false">
+          event_available</mat-icon
+        >Thêm mới
+      </button>
+    </div>
+  </div>
+  <!-- body -->
+  <div class="card-body">
+    <div class="form form-label-right">
+      <div class="form-group row">
+        <div
+          style="margin-left: 15px"
+          class="col-lg-6"
+          [formGroup]="searchGroup"
+        >
+          <input
+            type="text"
+            class="form-control"
+            name="searchText"
+            placeholder=""
+            value=""
+            formControlName="searchTerm"
+          />
+          <small class="form-text text-muted"
+            >Tìm kiếm theo mã loại, tên loại</small
+          >
+        </div>
+      </div>
+    </div>
+    <div
+      class="table-responsive angular-bootstrap-table"
+      [ngStyle]="{ height: getHeight() }"
+    >
+      <table
+        mat-table
+        class="table table-head-custom table-vertical-center overflow-hidden"
+        [dataSource]="lydotanggiamtaisanManagementService.items$ | async"
+      >
+        <ng-container matColumnDef="stt">
+          <th *matHeaderCellDef class="mat-column-vinCode">
+            <span>STT</span>
+          </th>
+          <td mat-cell *matCellDef="let r; let i = index">
+            <span>{{ i + 1 }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="LoaiTangGiam">
+          <th *matHeaderCellDef class="mat-column-vinCode">
+            <span>Loại tăng giảm</span>
+          </th>
+          <td mat-cell *matCellDef="let r">
+            <span *ngIf="r.LoaiTangGiam === 1">Tăng tài sản</span>
+            <span *ngIf="r.LoaiTangGiam === 2">Giảm tài sản</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="MaTangGiam">
+          <th *matHeaderCellDef class="mat-column-vinCode">
+            <span>Mã tăng giảm</span>
+          </th>
+          <td mat-cell *matCellDef="let r">
+            <span>{{ r.MaTangGiam }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="TenTangGiam">
+          <th *matHeaderCellDef class="mat-column-vinCode">
+            <span>Tên tăng giảm</span>
+          </th>
+          <td mat-cell *matCellDef="let r">
+            <span>{{ r.TenTangGiam }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="TrangThai">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            class="mat-column-vinCode"
+            style="width: 10%; text-align: center"
+          >
+            <span>Còn hiệu lực</span>
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let r"
+            class="mat-column-vinCode"
+            style="text-align: center"
+          >
+            <mat-checkbox [disabled]="true" [checked]="r.TrangThai">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="thaotac">
+          <th *matHeaderCellDef style="text-align: center">
+            <span>{{ "COMMOM.THAOTHAC" | translate }}</span>
+          </th>
+          <td mat-cell *matCellDef="let r" style="text-align: center">
+            <mat-icon
+              (click)="update(r)"
+              style="
+                cursor: pointer;
+                color: #1b70c5;
+                font-size: 16px;
+                margin-right: 15px;
+              "
+              aria-hidden="false"
+              *ngIf="Visible"
+            >
+              mode_edit</mat-icon
+            >
+            &nbsp;
+            <mat-icon
+              (click)="delete(r)"
+              style="cursor: pointer; color: #f52020; font-size: 16px"
+              aria-hidden="false"
+              *ngIf="Visible"
+            >
+              delete</mat-icon
+            >
+            &nbsp;
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="getVisibleColumns(); sticky: true"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: getVisibleColumns()"
+          (click)="row.highlighted = !row.highlighted"
+          [ngClass]="{ hovered: row.hovered, highlighted: row.highlighted }"
+          (mouseover)="row.hovered = true"
+          (mouseout)="row.hovered = false"
+        ></tr>
+      </table>
+    </div>
+    <!-- end: Table -->
+    <app-paginator
+      class="d-flex justify-content-between align-items-center flex-wrap"
+      [paginator]="paginator"
+      [isLoading]="isLoading"
+      (paginate)="paginate($event)"
+    ></app-paginator>
+  </div>
+</div>

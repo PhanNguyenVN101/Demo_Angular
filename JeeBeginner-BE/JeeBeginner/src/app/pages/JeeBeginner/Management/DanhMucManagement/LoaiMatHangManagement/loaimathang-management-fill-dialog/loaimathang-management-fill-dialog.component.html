@@ -1,0 +1,121 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <div class="modal-title h4" id="example-modal-sizes-title-lg">
+      <span class="dialog-title">
+        {{ "LOAIMATHANGMANAGEMENT.LOC" | translate }}
+      </span>
+    </div>
+  </div>
+  <div
+    class="overlay overlay-block cursor-default modal-body overflow-auto"
+    style="min-height: 200px; max-height: 70vh"
+  >
+    <ng-container *ngIf="loaimathangManagementService.isLoading$ | async">
+      <div class="overlay-layer bg-transparent">
+        <div class="spinner spinner-lg spinner-success"></div>
+      </div>
+    </ng-container>
+    <ng-container>
+      <form action="#" class="form form-label-right" [formGroup]="formGroup">
+        <div class="form-group row">
+          <div class="col-lg-12 d-flex">
+            <mat-form-field class="example-full-width">
+              <input
+                matInput
+                type="text"
+                formControlName="tenloaimathang"
+                placeholder="Tên loại mặt hàng"
+              />
+              <mat-error
+                >Tên loại mặt hàng<strong> bắt buộc nhập</strong></mat-error
+              >
+            </mat-form-field>
+            <mat-checkbox [formControl]="checkboxes.at(0)"> </mat-checkbox>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div
+            class="col-lg-12 d-flex"
+            *ngIf="isInitData.asObservable() | async"
+          >
+            <mat-form-field class="example-full-width">
+              <mat-select
+                placeholder="Loại mặt hàng cha"
+                formControlName="loaimathangcha"
+                (change)="onSelectionChangeCha($event)"
+              >
+                <mat-option
+                  *ngFor="let itemcha of loaiMHFilters"
+                  [value]="itemcha.IdLMHParent"
+                >
+                  {{ itemcha.LoaiMatHangCha }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                >Loại mặt hàng cha<strong> bắt buộc chọn</strong></mat-error
+              >
+            </mat-form-field>
+            <mat-checkbox [formControl]="checkboxes.at(1)"> </mat-checkbox>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-12 d-flex">
+            <small></small>
+            <mat-form-field class="example-full-width">
+              <input
+                matInput
+                type="text"
+                formControlName="douutien"
+                (change)="onChangeNumber($event)"
+                placeholder="Độ ưu tiên"
+              />
+              <mat-error
+                >Độ ưu tiên<strong> là 1 số không âm</strong></mat-error
+              >
+            </mat-form-field>
+            <mat-checkbox [formControl]="checkboxes.at(2)"> </mat-checkbox>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-12 d-flex">
+            <mat-form-field class="example-full-width">
+              <input
+                matInput
+                type="text"
+                formControlName="mota"
+                placeholder="Mô tả"
+              />
+              <mat-error>Mô tả<strong> bắt buộc nhập</strong></mat-error>
+            </mat-form-field>
+            <mat-checkbox [formControl]="checkboxes.at(3)"> </mat-checkbox>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+  </div>
+  <div class="modal-body">
+    <div class="modal-title" style="display: inline; flex: 2">
+      <button
+        [class.spinner]="isLoadingSubmit$ | async"
+        [disabled]="isLoadingSubmit$ | async"
+        mat-raised-button
+        style="float: right; margin-right: 12px"
+        class="ja_btn-addnew"
+        (click)="Loc()"
+      >
+        <mat-icon style="color: #ffffff; font-size: 16px" aria-hidden="false">
+          filter_alt</mat-icon
+        >
+        Lọc
+      </button>
+      <button
+        mat-raised-button
+        style="float: right; margin-right: 12px"
+        class="ja_btn-goback"
+        (click)="goBack()"
+      >
+        {{ "COMMOM.TROLAI" | translate }}
+      </button>
+    </div>
+  </div>
+</div>

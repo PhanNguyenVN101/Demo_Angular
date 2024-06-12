@@ -1,0 +1,9 @@
+.expanded {
+  width: 700px; /* Đặt chiều rộng mong muốn khi phóng to */
+  height: 500px;
+}
+
+.collapsed {
+  width: 600px; /* Đặt chiều rộng mong muốn khi thu nhỏ */
+  height: 400px;
+}
